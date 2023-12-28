@@ -6,14 +6,16 @@ type ErrorType = { cod: number; message: string } | null;
 
 export const useWeather = () => {
     const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState<string>("");
 
     const [error, setError] = useState<ErrorType>(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const [data, setData] = useState<APIResponse>();
+    const [showEmptyState, setShowEmptyState] = useState<boolean>();
 
     const onSubmit = async () => {
         try {
+            setShowEmptyState(false);
             setError(null);
             setLoading(true);
             const { data } = await axios.get(
@@ -34,6 +36,11 @@ export const useWeather = () => {
 
     const init = () => {
         const lastSaved = localStorage.getItem("lastSaved") as string;
+        if (!lastSaved) {
+            setShowEmptyState(true);
+            return;
+        }
+
         let parsed: { data: APIResponse; city: string } | object = {};
         try {
             parsed = JSON.parse(lastSaved || "{}");
@@ -44,6 +51,7 @@ export const useWeather = () => {
         } catch (e) {
             console.log(e);
         }
+
     };
 
     useEffect(() => {
@@ -56,6 +64,7 @@ export const useWeather = () => {
         data,
         onSubmit,
         city,
-        setCity
+        setCity,
+        showEmptyState
     }
 }

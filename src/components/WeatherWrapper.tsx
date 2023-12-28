@@ -2,12 +2,20 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import WeatherDisplay from "./WeatherDisplay";
 import { useWeather } from "@/hooks/useWeather";
+import Header from "./Header";
 
 const Weather = () => {
-  const { data, error, loading, onSubmit, city, setCity } = useWeather();
+  const { data, error, loading, onSubmit, city, setCity, showEmptyState } =
+    useWeather();
 
   const render = () => {
-    if (loading) {
+    if (showEmptyState) {
+      return (
+        <p className="mt-20 font-normal sm:text-2xl text-lg">
+          Please enter city name to search for weather
+        </p>
+      );
+    } else if (loading) {
       return <span className="loader mt-20"></span>;
     } else if (error) {
       return (
@@ -22,6 +30,7 @@ const Weather = () => {
 
   return (
     <div>
+      <Header />
       <div className="flex items-center flex-wrap sm:flex-nowrap sm:gap-10">
         <Input
           className="w-full"
