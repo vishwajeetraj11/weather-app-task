@@ -25,7 +25,6 @@ export const useWeather = () => {
             localStorage.setItem("lastSaved", JSON.stringify({ city, data }));
             setData(data);
         } catch (e) {
-            console.log(e);
             if (axios.isAxiosError(e)) {
                 setError(e.response?.data);
             }
