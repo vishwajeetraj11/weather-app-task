@@ -14,8 +14,18 @@ export const useWeather = () => {
     const [history, setHistory] = useState<APIResponse[]>([]);
     const [showEmptyState, setShowEmptyState] = useState<boolean>();
 
-    const onSubmit = async () => {
+    const onSubmit = async (city: string) => {
         try {
+            const cityData = history.find(
+                (histItem) => {
+                    return histItem.name.toLowerCase() === city
+                }
+            );
+            if (cityData) {
+                setData(cityData);
+                return
+            }
+
             setShowEmptyState(false);
             setError(null);
             setLoading(true);
@@ -72,6 +82,7 @@ export const useWeather = () => {
         city,
         setCity,
         showEmptyState,
-        history
+        history,
+        setData
     }
 }

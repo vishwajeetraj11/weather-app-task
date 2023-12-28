@@ -15,6 +15,7 @@ const Weather = () => {
     setCity,
     showEmptyState,
     history,
+    // setData,
   } = useWeather();
 
   const render = () => {
@@ -49,12 +50,12 @@ const Weather = () => {
             onChange={(e) => setCity(e.target.value)}
             onKeyDown={(e) => {
               if (e.code === "Enter") {
-                onSubmit();
+                onSubmit(city);
               }
             }}
           />
           <Button
-            onClick={onSubmit}
+            onClick={() => onSubmit(city)}
             disabled={loading}
             className="w-48 mt-4 sm:mt-0"
           >
@@ -67,7 +68,14 @@ const Weather = () => {
         <p className="text-left">Previous Results</p>
         <div className="py-4 flex flex-col sm:flex-row flex-wrap gap-4">
           {history.reverse().map((item) => (
-            <div className="shadow-light px-3 py-2" key={item.id}>
+            <button
+              onClick={() => {
+                onSubmit(item.name.toLowerCase());
+                setCity(item.name.toLocaleLowerCase());
+              }}
+              className="shadow-light px-3 py-2"
+              key={item.id}
+            >
               <p className="text-2xl text-left">{item.name}</p>
               <div className="flex flex-col items-center justify-center">
                 <Temperature
@@ -75,7 +83,7 @@ const Weather = () => {
                   temp={item.main.temp}
                 />
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
