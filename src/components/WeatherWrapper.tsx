@@ -3,10 +3,19 @@ import { Button } from "./ui/button";
 import WeatherDisplay from "./WeatherDisplay";
 import { useWeather } from "@/hooks/useWeather";
 import Header from "./Header";
+import Temperature from "./Temperature";
 
 const Weather = () => {
-  const { data, error, loading, onSubmit, city, setCity, showEmptyState } =
-    useWeather();
+  const {
+    data,
+    error,
+    loading,
+    onSubmit,
+    city,
+    setCity,
+    showEmptyState,
+    history,
+  } = useWeather();
 
   const render = () => {
     if (showEmptyState) {
@@ -29,29 +38,47 @@ const Weather = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <div className="flex items-center flex-wrap sm:flex-nowrap sm:gap-10">
-        <Input
-          className="w-full"
-          value={city}
-          disabled={loading}
-          onChange={(e) => setCity(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.code === "Enter") {
-              onSubmit();
-            }
-          }}
-        />
-        <Button
-          onClick={onSubmit}
-          disabled={loading}
-          className="w-48 mt-4 sm:mt-0"
-        >
-          Submit
-        </Button>
+    <div className="flex flex-col min-h-screen">
+      <div>
+        <Header />
+        <div className="flex items-center flex-wrap sm:flex-nowrap sm:gap-10">
+          <Input
+            className="w-full"
+            value={city}
+            disabled={loading}
+            onChange={(e) => setCity(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.code === "Enter") {
+                onSubmit();
+              }
+            }}
+          />
+          <Button
+            onClick={onSubmit}
+            disabled={loading}
+            className="w-48 mt-4 sm:mt-0"
+          >
+            Submit
+          </Button>
+        </div>
+        {render()}
       </div>
-      {render()}
+      <div className="mt-auto">
+        <p className="text-left">Previous Results</p>
+        <div className="py-4 flex flex-col sm:flex-row flex-wrap gap-4">
+          {history.reverse().map((item) => (
+            <div className="shadow-light px-3 py-2" key={item.id}>
+              <p className="text-2xl text-left">{item.name}</p>
+              <div className="flex flex-col items-center justify-center">
+                <Temperature
+                  feelsLike={item.main.feels_like}
+                  temp={item.main.temp}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

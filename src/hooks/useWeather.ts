@@ -11,6 +11,7 @@ export const useWeather = () => {
     const [error, setError] = useState<ErrorType>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [data, setData] = useState<APIResponse>();
+    const [history, setHistory] = useState<APIResponse[]>([]);
     const [showEmptyState, setShowEmptyState] = useState<boolean>();
 
     const onSubmit = async () => {
@@ -24,6 +25,12 @@ export const useWeather = () => {
 
             localStorage.setItem("lastSaved", JSON.stringify({ city, data }));
             setData(data);
+            setHistory((prevState) => {
+                const maxLength = 4;
+                const updatedHistory = prevState.filter(item => item.name !== data.name);
+                const newHistory = updatedHistory.slice(updatedHistory.length > maxLength ? updatedHistory.length - maxLength : 0).concat(data);
+                return newHistory;
+            });
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 setError(e.response?.data);
@@ -64,6 +71,7 @@ export const useWeather = () => {
         onSubmit,
         city,
         setCity,
-        showEmptyState
+        showEmptyState,
+        history
     }
 }
