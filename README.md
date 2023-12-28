@@ -1,5 +1,8 @@
 # React + TypeScript + Vite
 
+Preview: 
+<img width="1350" alt="image" src="https://github.com/vishwajeetraj11/weather-app-task/assets/47270995/e43cbb29-dad4-4f75-9332-d3472c98f77b">
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
