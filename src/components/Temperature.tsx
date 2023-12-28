@@ -6,12 +6,14 @@ type Props = {
 const Temperature = (props: Props) => {
   const { feelsLike, temp } = props;
   return (
-    <p className="my-2 inline-flex items-center">
-      {temp}° C{" "}
-      <span className="ml-2 text-xs rounded-full border-gray-300 border px-3 py-1.5">
+    <div className="flex flex-col items-center flex-wrap">
+      <p className="my-2 text-4xl py-3 inline-flex items-center text-center">
+        {temp}° C{" "}
+      </p>
+      <span className="mb-4 text-center text-xs rounded-full border-gray-300 border px-3 py-1.5">
         feels like {feelsLike} ° C{" "}
       </span>
-    </p>
+    </div>
   );
 };
 
