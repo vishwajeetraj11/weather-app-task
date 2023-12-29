@@ -67,7 +67,7 @@ const Weather = () => {
       <div className="mt-auto pt-10">
         <p className="text-left">Previous Results</p>
         <div className="py-4 flex flex-col sm:flex-row flex-wrap gap-4">
-          {history.reverse().map((item) => (
+          {history.map((item) => (
             <button
               onClick={() => {
                 onSubmit(item.name.toLowerCase());

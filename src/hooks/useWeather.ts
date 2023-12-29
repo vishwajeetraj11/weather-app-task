@@ -38,8 +38,8 @@ export const useWeather = () => {
             setHistory((prevState) => {
                 const maxLength = 4;
                 const updatedHistory = prevState.filter(item => item.name !== data.name);
-                const newHistory = updatedHistory.slice(updatedHistory.length > maxLength ? updatedHistory.length - maxLength : 0).concat(data);
-                return newHistory;
+                const newHistory = updatedHistory.slice(updatedHistory.length > maxLength ? updatedHistory.length - maxLength : 0);
+                return [data, ...newHistory];
             });
         } catch (e) {
             if (axios.isAxiosError(e)) {
