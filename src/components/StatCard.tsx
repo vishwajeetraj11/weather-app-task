@@ -17,6 +17,7 @@ const StatCard = (props: Props) => {
     : isVisibility
     ? Eye
     : null;
+
   return (
     <div className="flex items-start flex-col gap-2 shadow-light px-3 py-2 rounded-sm">
       {Icon && <Icon />}
